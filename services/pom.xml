@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.exoplatform.addons.lead-capture-exo-connector</groupId>
+        <artifactId>lead-capture-exo-connector</artifactId>
+        <version>1.0.x-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>lead-capture-exo-connector-services</artifactId>
+    <packaging>jar</packaging>
+    <name>eXo Lead capture :: Backend Services</name>
+    <description>eXo Lead capture services</description>
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.exoplatform.ws</groupId>
+            <artifactId>exo.ws.rest.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.exoplatform.core</groupId>
+            <artifactId>exo.core.component.security.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.exoplatform.commons</groupId>
+            <artifactId>commons-component-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${org.jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${org.jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${org.jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>lead-capture-exo-connector-services</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>1.18.2.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <exo.properties.url>classpath:/conf/configuration.properties</exo.properties.url>
+                        <exo.profiles>hsqldb</exo.profiles>
+                        <exo.files.storage.dir>target/files</exo.files.storage.dir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
