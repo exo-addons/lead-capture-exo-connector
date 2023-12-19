@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.core.MediaType;
 
@@ -39,6 +41,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.exoplatform.leadcapture.connector.exception.LeadCaptureConnectionException;
@@ -50,16 +53,21 @@ public class LeadsCaptureConnectorService {
     public static final String LEAD_CAPTURE_CONNECTION_ERROR = "lead.capture.connectionError";
     public static final String LEAD_CAPTURE_SERVER_URL = "leadCapture.server.url";
     public static final String LEAD_CAPTURE_TOKEN = "leadCapture.token";
+    public static final String CAPTURE_METHODE = "leadCapture.connector.captureMethode";
     public static final String LEAD_CAPTURE_REST_API = "/portal/rest/leadcapture/leadsmanagement/leads";
     public static final String TOKEN = "token";
+    public static String captureMethod;
     public static String serverUrl;
     public static String token;
     private final Log LOG = ExoLogger.getLogger(LeadsCaptureConnectorService.class);
     private HttpClient client;
+    private final String DATE_FORMAT = "d MMM yyyy HH:mm:ss";
+    private final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
 
     public LeadsCaptureConnectorService() {
         serverUrl = System.getProperty(LEAD_CAPTURE_SERVER_URL);
         token = System.getProperty(LEAD_CAPTURE_TOKEN);
+        captureMethod = System.getProperty(CAPTURE_METHODE);
     }
 
     public void
@@ -75,6 +83,15 @@ public class LeadsCaptureConnectorService {
         try {
             JSONObject leadInfo = new JSONObject();
             leadInfo.put("lead", lead);
+            JSONObject LeadResponse = new JSONObject();
+            LeadResponse.put("formName", captureMethod);
+            JSONArray fields = new JSONArray();
+            JSONObject field = new JSONObject();
+            field.put("name", captureMethod + " Date");
+            field.put("value", formatter.format(new Date()));
+            fields.put(field);
+            LeadResponse.put("fields", fields);
+            leadInfo.put("response", LeadResponse);
             String response = processPost(uri, leadInfo.toString(), token);
             if (response != null) {
                 LOG.info("Lead {} has been sent to the Lead capture server", lead.get("mail"));
