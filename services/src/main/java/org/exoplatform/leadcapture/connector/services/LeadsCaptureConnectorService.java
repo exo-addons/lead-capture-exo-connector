@@ -71,7 +71,7 @@ public class LeadsCaptureConnectorService {
     }
 
     public void
-    sendLead(JSONObject lead) throws Exception {
+    sendLead(String userName, JSONObject lead) throws Exception {
         if (StringUtils.isAllEmpty(serverUrl)) {
             throw new IllegalStateException("Lead capture server url is not defined");
         }
@@ -86,10 +86,14 @@ public class LeadsCaptureConnectorService {
             JSONObject LeadResponse = new JSONObject();
             LeadResponse.put("formName", captureMethod);
             JSONArray fields = new JSONArray();
-            JSONObject field = new JSONObject();
-            field.put("name", captureMethod + " Date");
-            field.put("value", formatter.format(new Date()));
-            fields.put(field);
+            JSONObject dateField = new JSONObject();
+            dateField.put("name", captureMethod + " Date");
+            dateField.put("value", formatter.format(new Date()));
+            fields.put(dateField);
+            JSONObject nameField = new JSONObject();
+            nameField.put("name", "UserName");
+            nameField.put("value", userName);
+            fields.put(nameField);
             LeadResponse.put("fields", fields);
             leadInfo.put("response", LeadResponse);
             String response = processPost(uri, leadInfo.toString(), token);
