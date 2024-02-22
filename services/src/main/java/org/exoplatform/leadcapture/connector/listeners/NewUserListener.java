@@ -66,7 +66,7 @@ public class NewUserListener extends UserEventListener {
             if (profile != null) {
                 lead.put("language", profile.getAttribute("user.language"));
             }
-            leadsCaptureConnectorService.sendLead(lead);
+            leadsCaptureConnectorService.sendLead(user.getUserName(), lead);
         } catch (Exception e) {
             LOG.error("an error occured", e);
         }
