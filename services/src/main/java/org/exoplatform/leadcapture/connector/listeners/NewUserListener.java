@@ -54,19 +54,21 @@ public class NewUserListener extends UserEventListener {
     @Override
     public void postSave(User user, boolean isNew) throws Exception {
         try {
-            JSONObject lead = new JSONObject();
-            lead.put("mail", user.getEmail());
-            lead.put("firstName", user.getFirstName());
-            lead.put("lastName", user.getLastName());
-            lead.put("captureMethod", captureMethod);
-            lead.put("captureType", captureType);
-            lead.put("personSource", personSource);
-            lead.put("captureSourceInfo", captureSourceInfo);
-            UserProfile profile = organizationService.getUserProfileHandler().findUserProfileByName(user.getUserName());
-            if (profile != null) {
-                lead.put("language", profile.getAttribute("user.language"));
+            if (isNew){
+                JSONObject lead = new JSONObject();
+                lead.put("mail", user.getEmail());
+                lead.put("firstName", user.getFirstName());
+                lead.put("lastName", user.getLastName());
+                lead.put("captureMethod", captureMethod);
+                lead.put("captureType", captureType);
+                lead.put("personSource", personSource);
+                lead.put("captureSourceInfo", captureSourceInfo);
+                UserProfile profile = organizationService.getUserProfileHandler().findUserProfileByName(user.getUserName());
+                if (profile != null) {
+                    lead.put("language", profile.getAttribute("user.language"));
+                }
+                leadsCaptureConnectorService.sendLead(user.getUserName(), lead);
             }
-            leadsCaptureConnectorService.sendLead(user.getUserName(), lead);
         } catch (Exception e) {
             LOG.error("an error occured", e);
         }
