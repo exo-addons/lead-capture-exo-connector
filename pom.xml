@@ -25,7 +25,7 @@
     <parent>
         <artifactId>addons-exo-parent-pom</artifactId>
         <groupId>org.exoplatform.addons</groupId>
-        <version>18-M03</version>
+        <version>18-M04</version>
     </parent>
     <groupId>org.exoplatform.addons.lead-capture-exo-connector</groupId>
     <artifactId>lead-capture-exo-connector</artifactId>
@@ -44,15 +44,15 @@
         <url>https://github.com/exo-addons/lead-capture-exo-connector</url>
     </scm>
     <properties>
-        <org.exoplatform.commons.version>7.0.x-exo-SNAPSHOT</org.exoplatform.commons.version>
+        <io.meeds.commons.version>7.0.x-exo-SNAPSHOT</io.meeds.commons.version>
         <org.jackson.version>2.4.2</org.jackson.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.exoplatform.commons</groupId>
+                <groupId>io.meeds.commons</groupId>
                 <artifactId>commons-component-common</artifactId>
-                <version>${org.exoplatform.commons.version}</version>
+                <version>${io.meeds.commons.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
