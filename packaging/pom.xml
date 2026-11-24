@@ -7,6 +7,10 @@
         <artifactId>lead-capture-exo-connector</artifactId>
         <version>1.0.x-SNAPSHOT</version>
     </parent>
+    <properties>
+      <!-- Generate and publish the CycloneDX SBOM of the zip once the parent POM carries the generation (maven-parent-pom 30-M04) -->
+      <sbom.skip>false</sbom.skip>
+    </properties>
     <artifactId>lead-capture-exo-connector-packaging</artifactId>
     <packaging>pom</packaging>
     <name>eXo Lead Capture connector Addon - Packaging</name>
